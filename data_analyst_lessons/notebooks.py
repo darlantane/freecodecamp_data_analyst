@@ -29,3 +29,19 @@ sales['Product'].value_counts().head(10).plot(kind='bar', figsize=(14,6))
 
 sales.plot(kind='scatter', x='Unit_Cost', y='Unit_Price', figsize=(6,6))
 sales.plot(kind='scatter', x='Order_Quantity', y='Profit', figsize=(6,6))
+
+sales[['Profit', 'Country']].boxplot(by='Country', figsize=(10,6))
+
+sales[['Customer_Age', 'Country']].boxplot(by='Country', figsize=(10,6))
+
+sales['Calculated_Date'] = sales[['Year', 'Month', 'Day']].apply(lambda x: '{}-{}-{}'.format(x[0], x[1], x[2]), axis=1)
+sales['Calculated_Date'].head()
+
+sales['Calculated_Date'] = pd.to_datetime(sales['Calculated_Date'])
+sales['Calculated_Date'].head()
+
+sales['Calculated_Date'].value_counts().plot(kind='line', figsize=(14,6))
+
+sales['Revenue'] += 50
+
+
