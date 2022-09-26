@@ -44,4 +44,5 @@ sales['Calculated_Date'].value_counts().plot(kind='line', figsize=(14,6))
 
 sales['Revenue'] += 50
 
-
+sales['Calculated_Date'] = sales[['Year', 'Month', 'Day']].apply(lambda x: '{}-{}-{}'.format(x[0], x[1], x[2]), axis=1)
+sales['Calculated_Date'].head()
