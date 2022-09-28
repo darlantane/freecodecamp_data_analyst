@@ -46,3 +46,14 @@ sales['Revenue'] += 50
 
 sales['Calculated_Date'] = sales[['Year', 'Month', 'Day']].apply(lambda x: '{}-{}-{}'.format(x[0], x[1], x[2]), axis=1)
 sales['Calculated_Date'].head()
+
+france_states = sales.loc[sales['Country'] == 'France', 'State'].value_counts()
+
+france_states
+
+france_states.plot(kind='bar', figsize=(14,6))
+
+sales['Product_Category'].value_counts()
+
+
+sales['Product_Category'].value_counts().plot(kind='pie', figsize=(6,6))
