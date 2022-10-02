@@ -20,3 +20,9 @@ print(A.shape)
 print(type(A.shape))
 
 print(A.shape[0])
+
+A = np.zeros((2, 3))
+
+A = A.reshape((3, 2))
+A.ravel()
+A.squeeze()
