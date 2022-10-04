@@ -17,8 +17,10 @@ print(A.mean())
 print(A.std())
 print(A.var())
 
-A = np.random.randint(0, 10, [5, 5]) # tableau aléatoire
+A = np.random.randint(0, 10, [5, 5])
 print(A)
 
 print(A.argsort())
 print(A[:,0].argsort())
+A = A[A[:,0].argsort(), :]
+A
