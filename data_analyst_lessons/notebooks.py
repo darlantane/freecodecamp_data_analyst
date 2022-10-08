@@ -1,8 +1,8 @@
 import nump as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import matp.pyplot as plt
 import inline
-import matplotlib
+import matp
 
 sales = pd.read_csv(
     'C:/Users/darla/Desktop/notebook/FreeCodeCamp-Pandas-Real-Life-Example-master/data/sales_data.csv',
