@@ -36,3 +36,21 @@ def survie(model, pclass=3, sex=0, age=26):
     print(model.predict_proba(x))
 survie(model)
 [0]
+
+
+
+score = []
+best_k = 1
+best_score = 0
+
+for k in range(best_k, 30):
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X, y)
+    score.append(model.score(X, y))
+
+    if best_score < model.score(X, y):
+        best_k = k
+        best_score = model.score(X, y)
+
+print(best_k)
+plt.plot(score)
