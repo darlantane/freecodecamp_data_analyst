@@ -53,3 +53,17 @@ plt.plot(k, train_score.mean(axis=1), label='train')
 plt.ylabel('score')
 plt.xlabel('n_neighbors')
 plt.legend()
+
+from sklearn.model_selection import GridSearchCV
+param_grid = {'n_neighbors': np.arange(1, 20),
+              'metric': ['euclidean', 'manhattan']}
+
+grid = GridSearchCV(KNeighborsClassifier(), param_grid, cv=5)
+
+grid.fit(X_train, y_train)
+
+print(grid.best_score_)
+print(grid.best_params_)
+
+model = grid.best_estimator_
+model.score(X_test, y_test)
