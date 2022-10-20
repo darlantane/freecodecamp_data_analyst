@@ -20,3 +20,11 @@ plt.title('Train set')
 plt.subplot(122)
 plt.scatter(X_test[:, 0], X_test[:, 1],c=y_test, alpha=0.8)
 plt.title('Test set')
+
+from sklearn.neighbors import KNeighborsClassifier
+model = KNeighborsClassifier(n_neighbors=1)
+
+model.fit(X_train, y_train)
+
+print('train score:', model.score(X_train, y_train))
+print('test score:', model.score(X_test, y_test))
