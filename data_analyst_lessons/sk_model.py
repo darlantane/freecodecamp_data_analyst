@@ -67,3 +67,16 @@ print(grid.best_params_)
 
 model = grid.best_estimator_
 model.score(X_test, y_test)
+
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test, model.predict(X_test))
+
+from sklearn.model_selection import learning_curve
+N, train_score, val_score = learning_curve(model, X_train, y_train,
+                                           train_sizes=np.linspace(0.1, 1, 10), cv=5)
+
+print(N)
+plt.plot(N, train_score.mean(axis=1), label='train')
+plt.plot(N, val_score.mean(axis=1), label='validation')
+plt.xlabel('train_sizes')
+plt.legend()
