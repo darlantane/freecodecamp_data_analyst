@@ -28,3 +28,28 @@ model.fit(X_train, y_train)
 
 print('train score:', model.score(X_train, y_train))
 print('test score:', model.score(X_test, y_test))
+
+from sklearn.model_selection import cross_val_score
+model = KNeighborsClassifier()
+cross_val_score(model, X_train, y_train, cv=5, scoring='accuracy')
+
+val_score = []
+for k in range(1, 50):
+    score = cross_val_score(KNeighborsClassifier(k), X_train, y_train, cv=5).mean()
+    val_score.append(score)
+
+plt.plot(val_score)
+
+from sklearn.model_selection import validation_curve
+model = KNeighborsClassifier()
+k = np.arange(1, 50)
+
+train_score, val_score = validation_curve(model, X_train, y_train,
+                                          'n_neighbors', k, cv=5)
+
+plt.plot(k, val_score.mean(axis=1), label='validation')
+plt.plot(k, train_score.mean(axis=1), label='train')
+
+plt.ylabel('score')
+plt.xlabel('n_neighbors')
+plt.legend()
