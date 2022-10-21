@@ -66,3 +66,30 @@ from sklearn.preprocessing import Binarizer, KBinsDiscretizer
 X = np.linspace(0, 5, 10).reshape((10, 1))
 np.hstack((X, Binarizer(threshold=3).fit_transform(X)))
 KBinsDiscretizer(n_bins=6).fit_transform(X).toarray()
+
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import SGDClassifier
+from sklearn.model_selection import train_test_split
+X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+model = make_pipeline(StandardScaler(), SGDClassifier())
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+
+from sklearn.model_selection import GridSearchCV
+model = make_pipeline(PolynomialFeatures(),
+                      StandardScaler(),
+                      SGDClassifier(random_state=0))
+params = {
+    'polynomialfeatures__degree':[2, 3, 4],
+    'sgdclassifier__penalty':['l1', 'l2']
+}
+
+grid = GridSearchCV(model, param_grid=params, cv=4)
+
+grid.fit(X_train, y_train)
+
+grid.score(X_test, y_test)
