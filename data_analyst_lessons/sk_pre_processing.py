@@ -42,3 +42,27 @@ X_robust = RobustScaler().fit_transform(X)
 
 plt.scatter(X[:, 2], X[:, 3])
 plt.scatter(X_robust[:, 2], X_robust[:, 3])
+
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+m = 100
+X = np.linspace(0, 4, m).reshape((m, 1))
+y = X**2 + 5*np.cos(X) + np.random.randn(m, 1)
+
+model = LinearRegression().fit(X, y)
+y_pred = model.predict(X)
+
+plt.scatter(X, y)
+plt.plot(X, y_pred, c='r', lw=3)
+
+X_poly = PolynomialFeatures(3).fit_transform(X)
+model = LinearRegression().fit(X_poly, y)
+y_pred = model.predict(X_poly)
+
+plt.scatter(X, y)
+plt.plot(X, y_pred, c='r', lw=3)
+
+from sklearn.preprocessing import Binarizer, KBinsDiscretizer
+X = np.linspace(0, 5, 10).reshape((10, 1))
+np.hstack((X, Binarizer(threshold=3).fit_transform(X)))
+KBinsDiscretizer(n_bins=6).fit_transform(X).toarray()
