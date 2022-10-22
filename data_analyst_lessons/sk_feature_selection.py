@@ -31,3 +31,20 @@ selector.fit(X, y)
 selector.scores_
 
 np.array(iris.feature_names)[selector.get_support()]
+
+from sklearn.feature_selection import RFECV
+from sklearn.linear_model import SGDClassifier
+selector = RFECV(SGDClassifier(random_state=0), step=1, min_features_to_select=2, cv=5)
+selector.fit(X, y)
+print(selector.ranking_)
+print(selector.grid_scores_)
+np.array(iris.feature_names)[selector.get_support()]
+
+from sklearn.feature_selection import SelectFromModel
+X = iris.data
+y = iris.target
+selector = SelectFromModel(SGDClassifier(random_state=0), threshold='mean')
+selector.fit(X, y)
+selector.estimator_.coef_
+
+np.array(iris.feature_names)[selector.get_support()]
