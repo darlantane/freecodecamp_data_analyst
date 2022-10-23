@@ -23,3 +23,33 @@ for k in K_range:
 plt.plot(K_range, inertia)
 plt.xlabel('nombre de clusters')
 plt.ylabel('Cout du modele (Inertia)')
+
+from sklearn.ensemble import IsolationForest
+X, y = make_blobs(n_samples=50, centers=1, cluster_std=0.1, random_state=0)
+X[-1,:] = np.array([2.25, 5])
+
+plt.scatter(X[:,0], X[:, 1])
+
+model = IsolationForest(contamination=0.01)
+model.fit(X)
+
+plt.scatter(X[:,0], X[:, 1], c=model.predict(X))
+
+from sklearn.datasets import load_digits
+
+digits = load_digits()
+images = digits.images
+X = digits.data
+y = digits.target
+
+plt.imshow(images[0])
+
+model = IsolationForest(random_state=0, contamination=0.02)
+model.fit(X)
+outliers = model.predict(X) == -1
+
+plt.figure(figsize=(12, 3))
+for i in range(10):
+    plt.subplot(1, 10, i+1)
+    plt.imshow(images[outliers][i])
+    plt.title(y[outliers][i])
