@@ -53,3 +53,18 @@ for i in range(10):
     plt.subplot(1, 10, i+1)
     plt.imshow(images[outliers][i])
     plt.title(y[outliers][i])
+
+from sklearn.decomposition import PCA
+
+model = PCA(n_components=2)
+model.fit(X)
+
+x_pca = model.transform(X)
+plt.scatter(x_pca[:,0], x_pca[:,1], c=y)
+
+plt.figure()
+plt.xlim(-30, 30)
+plt.ylim(-30, 30)
+
+for i in range(100):
+    plt.text(x_pca[i,0], x_pca[i,1], str(y[i]))
