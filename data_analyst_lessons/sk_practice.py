@@ -68,3 +68,31 @@ plt.ylim(-30, 30)
 
 for i in range(100):
     plt.text(x_pca[i,0], x_pca[i,1], str(y[i]))
+
+
+
+n_dims = X.shape[1]
+model = PCA(n_components=n_dims)
+model.fit(X)
+
+variances = model.explained_variance_ratio_
+
+meilleur_dims = np.argmax(np.cumsum(variances) > 0.90)
+
+
+plt.bar(range(n_dims), np.cumsum(variances))
+plt.hlines(0.90, 0, meilleur_dims, colors='r')
+plt.vlines(meilleur_dims, 0, 0.90, colors='r')
+
+model = PCA(n_components=0.99)
+model.fit(X)
+
+X_compress = model.fit_transform(X)
+X_decompress = model.inverse_transform(X_compress)
+
+plt.subplot(1, 2, 1)
+plt.imshow(X[0,:].reshape((8,8)), cmap='gray')
+plt.title('originel')
+plt.subplot(1, 2, 2)
+plt.imshow(X_decompress[0,:].reshape((8,8)), cmap='gray')
+plt.title('Compressé')
