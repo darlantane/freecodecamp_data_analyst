@@ -41,3 +41,18 @@ model_4 = VotingClassifier([('SGD', model_1),
 for model in (model_1, model_2, model_3, model_4):
     model.fit(X_train, y_train)
     print(model.__class__.__name__, model.score(X_test, y_test))
+
+
+from sklearn.ensemble import BaggingClassifier, RandomForestClassifier
+model = BaggingClassifier(base_estimator=KNeighborsClassifier(),
+                          n_estimators=100)
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+
+model = RandomForestClassifier(n_estimators=100)
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+
+plot_decision_boundary(model, X_train, y_train)
