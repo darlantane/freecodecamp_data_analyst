@@ -22,3 +22,22 @@ X, y = make_moons(n_samples=500, noise=0.3, random_state=0)
 plt.scatter(X[:,0], X[:,1], c=y, alpha=0.8)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+
+
+
+from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import VotingClassifier
+model_1 = SGDClassifier(random_state=0)
+model_2 = DecisionTreeClassifier(random_state=0)
+model_3 = KNeighborsClassifier(n_neighbors=2)
+
+model_4 = VotingClassifier([('SGD', model_1),
+                            ('Tree', model_2),
+                            ('KNN', model_3)],
+                           voting='hard')
+
+for model in (model_1, model_2, model_3, model_4):
+    model.fit(X_train, y_train)
+    print(model.__class__.__name__, model.score(X_test, y_test))
