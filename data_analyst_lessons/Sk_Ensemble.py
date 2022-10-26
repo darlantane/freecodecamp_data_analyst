@@ -56,3 +56,11 @@ model.fit(X_train, y_train)
 model.score(X_test, y_test)
 
 plot_decision_boundary(model, X_train, y_train)
+
+
+from sklearn.ensemble import AdaBoostClassifier, GradientBoostingClassifier
+model = AdaBoostClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+
+plot_decision_boundary(model, X_train, y_train)
