@@ -64,3 +64,13 @@ model.fit(X_train, y_train)
 model.score(X_test, y_test)
 
 plot_decision_boundary(model, X_train, y_train)
+
+
+from sklearn.ensemble import StackingClassifier
+model = StackingClassifier([('SGD', model_1),
+                            ('Tree', model_2),
+                            ('KNN', model_3)],
+                           final_estimator=KNeighborsClassifier())
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
