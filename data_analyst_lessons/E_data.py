@@ -9,3 +9,11 @@ url = 'https://raw.githubusercontent.com/MachineLearnia/Python-Machine-Learning/
 data = pd.read_csv(url, index_col=0, encoding = "ISO-8859-1")
 
 data.head()
+
+df = data.copy()
+df.shape
+
+df.dtypes.value_counts().plot.pie()
+
+plt.figure(figsize=(20,10))
+sns.heatmap(df.isna(), cbar=False)
