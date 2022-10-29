@@ -43,3 +43,17 @@ negative_df = df[df['SARS-Cov-2 exam result'] == 'negative']
 missing_rate = df.isna().sum()/df.shape[0]
 blood_columns = df.columns[(missing_rate < 0.9) & (missing_rate >0.88)]
 viral_columns = df.columns[(missing_rate < 0.88) & (missing_rate > 0.75)]
+
+for col in blood_columns:
+    plt.figure()
+    sns.distplot(positive_df[col], label='positive')
+    sns.distplot(negative_df[col], label='negative')
+    plt.legend()
+
+sns.countplot(x='Patient age quantile', hue='SARS-Cov-2 exam result', data=df)
+
+pd.crosstab(df['SARS-Cov-2 exam result'], df['Influenza A'])
+
+for col in viral_columns:
+    plt.figure()
+    sns.heatmap(pd.crosstab(df['SARS-Cov-2 exam result'], df[col]), annot=True, fmt='d')
