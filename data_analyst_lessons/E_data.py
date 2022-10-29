@@ -17,3 +17,29 @@ df.dtypes.value_counts().plot.pie()
 
 plt.figure(figsize=(20,10))
 sns.heatmap(df.isna(), cbar=False)
+
+(df.isna().sum()/df.shape[0]).sort_values(ascending=True)
+
+df = df[df.columns[df.isna().sum()/df.shape[0] <0.9]]
+df.head()
+
+plt.figure(figsize=(20,10))
+sns.heatmap(df.isna(), cbar=False)
+
+for col in df.select_dtypes('float'):
+    plt.figure()
+    sns.distplot(df[col])
+
+for col in df.select_dtypes('object'):
+    print(f'{col :-<50} {df[col].unique()}')
+
+for col in df.select_dtypes('object'):
+    plt.figure()
+    df[col].value_counts().plot.pie()
+
+positive_df = df[df['SARS-Cov-2 exam result'] == 'positive']
+negative_df = df[df['SARS-Cov-2 exam result'] == 'negative']
+
+missing_rate = df.isna().sum()/df.shape[0]
+blood_columns = df.columns[(missing_rate < 0.9) & (missing_rate >0.88)]
+viral_columns = df.columns[(missing_rate < 0.88) & (missing_rate > 0.75)]
