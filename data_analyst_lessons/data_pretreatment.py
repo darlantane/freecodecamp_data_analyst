@@ -58,3 +58,15 @@ def preprocessing(df):
 X_train, y_train = preprocessing(trainset)
 
 X_test, y_test = preprocessing(testset)
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.decomposition import PCA
+
+model_1 = RandomForestClassifier(random_state=0)
+model_2 = make_pipeline(PolynomialFeatures(2), SelectKBest(f_classif, k=10),
+                        RandomForestClassifier(random_state=0))
+
