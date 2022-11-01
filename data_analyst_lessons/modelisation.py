@@ -16,3 +16,20 @@ viral_columns = list(df.columns[(missing_rate < 0.80) & (missing_rate > 0.75)])
 key_columns = ['Patient age quantile', 'SARS-Cov-2 exam result']
 df = df[key_columns + blood_columns + viral_columns]
 df.head()
+
+from sklearn.model_selection import train_test_split
+trainset, testset = train_test_split(df, test_size=0.2, random_state=0)
+trainset['SARS-Cov-2 exam result'].value_counts()
+
+testset['SARS-Cov-2 exam result'].value_counts()
+
+def encodage(df):
+    code = {'negative':0,
+            'positive':1,
+            'not_detected':0,
+            'detected':1}
+
+    for col in df.select_dtypes('object').columns:
+        df.loc[:,col] = df[col].map(code)
+
+    return df
