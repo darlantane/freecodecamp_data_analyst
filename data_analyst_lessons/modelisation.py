@@ -33,3 +33,29 @@ def encodage(df):
         df.loc[:,col] = df[col].map(code)
 
     return df
+
+def feature_engineering(df):
+    df['est malade'] = df[viral_columns].sum(axis=1) >= 1
+    df = df.drop(viral_columns, axis=1)
+    return df
+
+def imputation(df):
+    df = df.dropna(axis=0)
+    return  df
+
+def preprocessing(df):
+
+    df = encodage(df)
+    df = feature_engineering(df)
+    df = imputation(df)
+
+    X = df.drop('SARS-Cov-2 exam result', axis=1)
+    y = df['SARS-Cov-2 exam result']
+
+    print(y.value_counts())
+
+    return X, y
+
+X_train, y_train = preprocessing(trainset)
+
+X_test, y_test = preprocessing(testset)
