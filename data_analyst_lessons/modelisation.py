@@ -79,3 +79,26 @@ def evaluation(model):
     plt.plot(N, train_score.mean(axis=1), label='train score')
     plt.plot(N, val_score.mean(axis=1), label='validation score')
     plt.legend()
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+
+preprocessor = make_pipeline(PolynomialFeatures(2, include_bias=False), SelectKBest(f_classif, k=10))
+RandomForest = make_pipeline(preprocessor, RandomForestClassifier(random_state=0))
+AdaBoost = make_pipeline(preprocessor, AdaBoostClassifier(random_state=0))
+SVM = make_pipeline(preprocessor, StandardScaler(), SVC(random_state=0))
+KNN = make_pipeline(preprocessor, StandardScaler(), KNeighborsClassifier())
+
+dict_of_models = {'RandomForest': RandomForest,
+                  'AdaBoost' : AdaBoost,
+                  'SVM': SVM,
+                  'KNN': KNN
+                  }
+for name, model in dict_of_models.items():
+    print(name)
+    evaluation(model)
