@@ -102,3 +102,39 @@ dict_of_models = {'RandomForest': RandomForest,
 for name, model in dict_of_models.items():
     print(name)
     evaluation(model)
+
+
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+
+SVM
+
+hyper_params = {'svc__gamma':[1e-3, 1e-4, 0.0005],
+                'svc__C':[1, 10, 100, 1000, 3000],
+                'pipeline__polynomialfeatures__degree':[2, 3],
+                'pipeline__selectkbest__k': range(45, 60)}
+grid = RandomizedSearchCV(SVM, hyper_params, scoring='recall', cv=4,
+                          n_iter=40)
+
+grid.fit(X_train, y_train)
+
+print(grid.best_params_)
+
+y_pred = grid.predict(X_test)
+
+print(classification_report(y_test, y_pred))
+
+from sklearn.metrics import precision_recall_curve
+precision, recall, threshold = precision_recall_curve(y_test, grid.best_estimator_.decision_function(X_test))
+plt.plot(threshold, precision[:-1], label='precision')
+plt.plot(threshold, recall[:-1], label='recall')
+plt.legend()
+
+def model_final(model, X, threshold=0):
+    return model.decision_function(X) > threshold
+y_pred = model_final(grid.best_estimator_, X_test, threshold=-1)
+
+from sklearn.metrics import recall_score
+
+f1_score(y_test, y_pred)
+
+recall_score(y_test, y_pred)
