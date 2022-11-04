@@ -22,6 +22,7 @@ numerical_pipeline = make_pipeline(SimpleImputer(strategy='mean'), StandardScale
 categorical_pipeline = make_pipeline(SimpleImputer(strategy='most_frequent'), OneHotEncoder())
 preprocessor = make_column_transformer((numerical_pipeline, numerical_features),
                                        (categorical_pipeline, categorical_features))
+
 model = make_pipeline(preprocessor, SGDClassifier())
 
 model.fit(X_train, y_train)
