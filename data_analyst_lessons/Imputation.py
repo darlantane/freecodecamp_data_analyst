@@ -34,3 +34,17 @@ imputer.fit_transform(X)
 X_test = np.array([[np.nan, 35]])
 
 imputer.transform(X_test)
+
+from sklearn.impute import MissingIndicator
+from sklearn.pipeline import make_union
+X = np.array([[1, 100],
+              [2, 30],
+              [3, 15],
+              [np.nan, np.nan]])
+
+MissingIndicator().fit_transform(X)
+
+pipeline = make_union(SimpleImputer(strategy='constant', fill_value=-99),
+                      MissingIndicator())
+
+pipeline.fit_transform(X)
