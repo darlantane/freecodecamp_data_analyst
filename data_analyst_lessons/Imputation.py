@@ -21,3 +21,16 @@ X_test = np.array([[12, 5],
                    [np.nan, np.nan]])
 
 imputer.transform(X_test)
+
+from sklearn.impute import KNNImputer
+X = np.array([[1, 100],
+              [2, 30],
+              [3, 15],
+              [np.nan, 20]])
+
+imputer = KNNImputer(n_neighbors=1)
+imputer.fit_transform(X)
+
+X_test = np.array([[np.nan, 35]])
+
+imputer.transform(X_test)
