@@ -48,3 +48,19 @@ pipeline = make_union(SimpleImputer(strategy='constant', fill_value=-99),
                       MissingIndicator())
 
 pipeline.fit_transform(X)
+
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import GridSearchCV, train_test_split
+titanic = sns.load_dataset('titanic')
+X = titanic[['pclass', 'age']]
+y = titanic['survived']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+model = make_pipeline(KNNImputer(), SGDClassifier())
+
+params = {'knnimputer__n_neighbors' : [1, 2, 3, 4]}
+
+grid = GridSearchCV(model, param_grid=params, cv=5)
+
+grid.fit(X_train, y_train)
+grid.best_params_
