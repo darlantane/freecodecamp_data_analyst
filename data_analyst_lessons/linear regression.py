@@ -57,8 +57,10 @@ plt.scatter(x, y)
 plt.plot(x, predictions, c='r')
 
 plt.plot(range(n_iterations), cost_history)
+
 def coef_determination(y, pred):
     u = ((y - pred)**2).sum()
     v = ((y - y.mean())**2).sum()
     return 1 - u/v
+
 coef_determination(y, predictions)
