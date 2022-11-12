@@ -98,3 +98,22 @@ print(X[:10])
 
 theta = np.random.randn(3, 1)
 theta
+
+
+n_iterations = 1000
+learning_rate = 0.01
+
+theta_final, cost_history = gradient_descent(X, y, theta, learning_rate, n_iterations)
+predictions = model(X, theta_final)
+
+theta_final
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(x[:,0], x[:,1], y)
+ax.scatter(x[:,0], x[:,1], predictions)
+
+plt.plot(range(n_iterations), cost_history)
+
+coef_determination(y, predictions)
