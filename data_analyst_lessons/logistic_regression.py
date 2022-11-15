@@ -29,3 +29,28 @@ def optimisation(X, W, b, A, y, learning_rate):
     W = W - learning_rate * dW
     b = b - learning_rate * db
     return (W, b)
+
+
+def predict(X, W, b):
+    A = forward_propagation(X, W, b)
+    return A >= 0.5
+
+def visualisation(X, y, W, b):
+    resolution = 300
+    fig, ax = plt.subplots(figsize=(9, 6))
+    ax.scatter(X[:, 0], X[:, 1], c=y, s=50, edgecolor='k')
+
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+
+    x1 = np.linspace(xlim[0], xlim[1], resolution)
+    x2 = np.linspace(ylim[0], ylim[1], resolution)
+    X1, X2 = np.meshgrid(x1, x2)
+
+    XX = np.vstack((X1.ravel(), X2.ravel())).T
+
+    Z = predict(XX, W, b)
+    Z = Z.reshape((resolution, resolution))
+
+    ax.pcolormesh(X1, X2, Z, zorder=0, alpha=0.1)
+    ax.contour(X1, X2, Z, colors='g')
