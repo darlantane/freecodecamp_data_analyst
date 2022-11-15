@@ -54,3 +54,22 @@ def visualisation(X, y, W, b):
 
     ax.pcolormesh(X1, X2, Z, zorder=0, alpha=0.1)
     ax.contour(X1, X2, Z, colors='g')
+
+
+def regression_logistique(X, y, learning_rate=0.1, n_iter=100):
+
+    W, b = initialisation(X)
+    loss_history = []
+
+    for i in range(n_iter):
+        A = forward_propagation(X, W, b)
+        loss_history.append(log_loss(y, A))
+        W, b = optimisation(X, W, b, A, y, learning_rate=0.1)
+
+    visualisation(X, y, W, b)
+    plt.figure(figsize=(9, 6))
+    plt.plot(loss_history)
+    plt.xlabel('n_iteration')
+    plt.ylabel('Log_loss')
+    plt.title('Evolution des erreurs')
+regression_logistique(X, y)
