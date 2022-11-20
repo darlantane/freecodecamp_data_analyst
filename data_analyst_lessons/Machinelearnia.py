@@ -56,3 +56,11 @@ def artificial_neuron(X, y, learning_rate = 0.1, n_iter = 100):
     return (W, b)
 
 W, b = artificial_neuron(X, y)
+
+fig, ax = plt.subplots(figsize=(9, 6))
+ax.scatter(X[:,0], X[:, 1], c=y, cmap='summer')
+
+x1 = np.linspace(-1, 4, 100)
+x2 = ( - W[0] * x1 - b) / W[1]
+
+ax.plot(x1, x2, c='orange', lw=3)
