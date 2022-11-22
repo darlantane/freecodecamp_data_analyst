@@ -64,3 +64,22 @@ x1 = np.linspace(-1, 4, 100)
 x2 = ( - W[0] * x1 - b) / W[1]
 
 ax.plot(x1, x2, c='orange', lw=3)
+
+import plotly.graph_objects as go
+fig = go.Figure(data=[go.Scatter3d(
+    x=X[:, 0].flatten(),
+    y=X[:, 1].flatten(),
+    z=y.flatten(),
+    mode='markers',
+    marker=dict(
+        size=5,
+        color=y.flatten(),
+        colorscale='YlGn',
+        opacity=0.8,
+        reversescale=True
+    )
+)])
+
+fig.update_layout(template= "plotly_dark", margin=dict(l=0, r=0, b=0, t=0))
+fig.layout.scene.camera.projection.type = "orthographic"
+fig.show()
