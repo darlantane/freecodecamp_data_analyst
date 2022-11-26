@@ -38,6 +38,7 @@ def predict(X, W, b):
     # print(A)
     return A >= 0.5
 
+from tqdm import tqdm
 
 def artificial_neuron(X_train, y_train, X_test, y_test, learning_rate = 0.1, n_iter = 100):
     # initialisation W, b
@@ -62,3 +63,20 @@ def artificial_neuron(X_train, y_train, X_test, y_test, learning_rate = 0.1, n_i
             test_loss.append(log_loss(A_test, y_test))
             y_pred = predict(X_test, W, b)
             test_acc.append(accuracy_score(y_test, y_pred))
+
+            dW, db = gradients(A, X_train, y_train)
+        W, b = update(dW, db, W, b, learning_rate)
+
+
+    plt.figure(figsize=(12, 4))
+    plt.subplot(1, 2, 1)
+    plt.plot(train_loss, label='train loss')
+    plt.plot(test_loss, label='test loss')
+    plt.legend()
+    plt.subplot(1, 2, 2)
+    plt.plot(train_acc, label='train acc')
+    plt.plot(test_acc, label='test acc')
+    plt.legend()
+    plt.show()
+
+    return (W, b)
