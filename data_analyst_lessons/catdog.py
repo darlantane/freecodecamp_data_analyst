@@ -37,4 +37,28 @@ def predict(X, W, b):
     A = model(X, W, b)
     # print(A)
     return A >= 0.5
-from tqdm import tqdm
+
+
+def artificial_neuron(X_train, y_train, X_test, y_test, learning_rate = 0.1, n_iter = 100):
+    # initialisation W, b
+    W, b = initialisation(X_train)
+
+    train_loss = []
+    train_acc = []
+    test_loss = []
+    test_acc = []
+
+    for i in tqdm(range(n_iter)):
+        A = model(X_train, W, b)
+
+        if i %10 == 0:
+            # Train
+            train_loss.append(log_loss(A, y_train))
+            y_pred = predict(X_train, W, b)
+            train_acc.append(accuracy_score(y_train, y_pred))
+
+            # Test
+            A_test = model(X_test, W, b)
+            test_loss.append(log_loss(A_test, y_test))
+            y_pred = predict(X_test, W, b)
+            test_acc.append(accuracy_score(y_test, y_pred))
