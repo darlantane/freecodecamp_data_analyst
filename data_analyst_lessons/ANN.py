@@ -19,3 +19,23 @@ def initialisation(n0, n1, n2):
     }
 
     return parametres
+
+def forward_propagation(X, parametres):
+
+    W1 = parametres['W1']
+    b1 = parametres['b1']
+    W2 = parametres['W2']
+    b2 = parametres['b2']
+
+    Z1 = W1.dot(X) + b1
+    A1 = 1 / (1 + np.exp(-Z1))
+
+    Z2 = W2.dot(A1) + b2
+    A2 = 1 / (1 + np.exp(-Z2))
+
+    activations = {
+        'A1': A1,
+        'A2': A2
+    }
+
+    return activations
