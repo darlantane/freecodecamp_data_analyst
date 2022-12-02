@@ -39,3 +39,28 @@ def forward_propagation(X, parametres):
     }
 
     return activations
+
+def back_propagation(X, y, parametres, activations):
+
+    A1 = activations['A1']
+    A2 = activations['A2']
+    W2 = parametres['W2']
+
+    m = y.shape[1]
+
+    dZ2 = A2 - y
+    dW2 = 1 / m * dZ2.dot(A1.T)
+    db2 = 1 / m * np.sum(dZ2, axis=1, keepdims = True)
+
+    dZ1 = np.dot(W2.T, dZ2) * A1 * (1 - A1)
+    dW1 = 1 / m * dZ1.dot(X.T)
+    db1 = 1 / m * np.sum(dZ1, axis=1, keepdims = True)
+
+    gradients = {
+        'dW1' : dW1,
+        'db1' : db1,
+        'dW2' : dW2,
+        'db2' : db2
+    }
+
+    return gradients
