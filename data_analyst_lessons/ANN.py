@@ -64,3 +64,29 @@ def back_propagation(X, y, parametres, activations):
     }
 
     return gradients
+
+def update(gradients, parametres, learning_rate):
+
+    W1 = parametres['W1']
+    b1 = parametres['b1']
+    W2 = parametres['W2']
+    b2 = parametres['b2']
+
+    dW1 = gradients['dW1']
+    db1 = gradients['db1']
+    dW2 = gradients['dW2']
+    db2 = gradients['db2']
+
+    W1 = W1 - learning_rate * dW1
+    b1 = b1 - learning_rate * db1
+    W2 = W2 - learning_rate * dW2
+    b2 = b2 - learning_rate * db2
+
+    parametres = {
+        'W1': W1,
+        'b1': b1,
+        'W2': W2,
+        'b2': b2
+    }
+
+    return parametres
