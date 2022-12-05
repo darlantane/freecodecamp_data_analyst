@@ -90,3 +90,48 @@ def update(gradients, parametres, learning_rate):
     }
 
     return parametres
+
+def predict(X, parametres):
+    activations = forward_propagation(X, parametres)
+    A2 = activations['A2']
+    return A2 >= 0.5
+
+def neural_network(X, y, n1=32, learning_rate = 0.1, n_iter = 1000):
+
+    # initialisation parametres
+    n0 = X.shape[0]
+    n2 = y.shape[0]
+    np.random.seed(0)
+    parametres = initialisation(n0, n1, n2)
+
+    train_loss = []
+    train_acc = []
+    history = []
+
+    # gradient descent
+    for i in tqdm(range(n_iter)):
+        activations = forward_propagation(X, parametres)
+        A2 = activations['A2']
+
+        # Plot courbe d'apprentissage
+        train_loss.append(log_loss(y.flatten(), A2.flatten()))
+        y_pred = predict(X, parametres)
+        train_acc.append(accuracy_score(y.flatten(), y_pred.flatten()))
+
+        history.append([parametres.copy(), train_loss, train_acc, i])
+
+        # mise a jour
+        gradients = back_propagation(X, y, parametres, activations)
+        parametres = update(gradients, parametres, learning_rate)
+
+
+    plt.figure(figsize=(12, 4))
+    plt.subplot(1, 2, 1)
+    plt.plot(train_loss, label='train loss')
+    plt.legend()
+    plt.subplot(1, 2, 2)
+    plt.plot(train_acc, label='train acc')
+    plt.legend()
+    plt.show()
+
+    return parametres
