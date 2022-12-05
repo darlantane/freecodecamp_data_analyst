@@ -135,3 +135,13 @@ def neural_network(X, y, n1=32, learning_rate = 0.1, n_iter = 1000):
     plt.show()
 
     return parametres
+
+X, y = make_circles(n_samples=100, noise=0.1, factor=0.3, random_state=0)
+X = X.T
+y = y.reshape((1, y.shape[0]))
+
+print('dimensions de X:', X.shape)
+print('dimensions de y:', y.shape)
+
+plt.scatter(X[0, :], X[1, :], c=y, cmap='summer')
+plt.show()
