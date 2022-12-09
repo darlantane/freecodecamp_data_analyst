@@ -69,3 +69,30 @@ def predict(X, parametres):
     Af = activations['A' + str(C)]
     return Af >= 0.5
 
+def deep_neural_network(X, y, hidden_layers = (16, 16, 16), learning_rate = 0.001, n_iter = 3000):
+
+   
+    dimensions = list(hidden_layers)
+    dimensions.insert(0, X.shape[0])
+    dimensions.append(y.shape[0])
+    np.random.seed(1)
+    parametres = initialisation(dimensions)
+
+
+    training_history = np.zeros((int(n_iter), 2))
+
+    C = len(parametres) // 2
+
+
+    for i in tqdm(range(n_iter)):
+
+        activations = forward_propagation(X, parametres)
+        gradients = back_propagation(y, parametres, activations)
+        parametres = update(gradients, parametres, learning_rate)
+        Af = activations['A' + str(C)]
+
+
+        training_history[i, 0] = (log_loss(y.flatten(), Af.flatten()))
+        y_pred = predict(X, parametres)
+        training_history[i, 1] = (accuracy_score(y.flatten(), y_pred.flatten()))
+
