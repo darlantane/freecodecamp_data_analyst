@@ -48,3 +48,24 @@ def back_propagation(y, parametres, activations):
             dZ = np.dot(parametres['W' + str(c)].T, dZ) * activations['A' + str(c - 1)] * (1 - activations['A' + str(c - 1)])
 
     return gradients
+
+
+def update(gradients, parametres, learning_rate):
+
+    C = len(parametres) // 2
+
+    for c in range(1, C + 1):
+        parametres['W' + str(c)] = parametres['W' + str(c)] - learning_rate * gradients['dW' + str(c)]
+        parametres['b' + str(c)] = parametres['b' + str(c)] - learning_rate * gradients['db' + str(c)]
+
+    return parametres
+
+
+
+
+def predict(X, parametres):
+    activations = forward_propagation(X, parametres)
+    C = len(parametres) // 2
+    Af = activations['A' + str(C)]
+    return Af >= 0.5
+
