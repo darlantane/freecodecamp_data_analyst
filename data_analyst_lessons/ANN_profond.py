@@ -71,7 +71,7 @@ def predict(X, parametres):
 
 def deep_neural_network(X, y, hidden_layers = (16, 16, 16), learning_rate = 0.001, n_iter = 3000):
 
-   
+
     dimensions = list(hidden_layers)
     dimensions.insert(0, X.shape[0])
     dimensions.append(y.shape[0])
