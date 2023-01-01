@@ -18,3 +18,10 @@ for i in range(10):
 
 plt.tight_layout()
 plt.show()
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(128, activation='relu'),
+    keras.layers.Dense(128, activation='relu'),
+    keras.layers.Dense(10)
+])
